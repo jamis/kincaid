@@ -3,12 +3,15 @@ require 'kincaid/page'
 
 module Kincaid
   class Map
-    def initialize
+    attr_reader :name
+
+    def initialize(name)
+      @name = name
       @pages = []
     end
 
-    def new_page
-      @pages << Page.new
+    def new_page(title)
+      @pages << Page.new(self, title)
       yield @pages.last
     end
 

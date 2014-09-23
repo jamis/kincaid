@@ -10,8 +10,8 @@ It works like this:
 
     require 'kincaid/map'
 
-    map = Kincaid::Map.new
-    map.new_page do |page|
+    map = Kincaid::Map.new "My Map"
+    map.new_page "First Floor" do |page|
       page.rectangle "outline", Kincaid::Point[-10,-10], 20, 20
       page.door :normal, Kincaid::Point[-2.5,-10], width: 5
     end

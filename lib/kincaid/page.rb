@@ -6,8 +6,13 @@ require 'kincaid/decorations/door'
 require 'kincaid/decorations/window'
 
 module Kincaid
+  attr_reader :title
+
   class Page
-    def initialize
+    def initialize(map, title)
+      @map = map
+      @title = title
+
       @polygons = {}
       @edges = {}
       @decorations = []
@@ -72,8 +77,10 @@ module Kincaid
       width  = (max_x - min_x)
       height = (max_y - min_y)
 
+      max_height = pdf.bounds.height - 60 # space for title
+
       x_unit_size = pdf.bounds.width / width.to_f
-      y_unit_size = pdf.bounds.height / height.to_f
+      y_unit_size = max_height / height.to_f
 
       unit_size = [x_unit_size, y_unit_size].min
       grid_size = 5 * unit_size
@@ -130,11 +137,14 @@ module Kincaid
         decor.render(pdf, setting)
       end
 
-      #pdf.stroke_color = "ff0000"
-      #pdf.stroke do
-      #  pdf.line 0, y_ofs, pdf.bounds.width, y_ofs
-      #  pdf.line x_ofs, 0, x_ofs, pdf.bounds.height
-      #end
+      pdf.fill_color "000000"
+      pdf.stroke_color "000000"
+
+      pdf.font "Times-Roman", size: 40
+      pdf.text_box @title, align: :center, valign: :center, at: [0, pdf.bounds.height], width: pdf.bounds.width, height: 40
+
+      pdf.font "Times-Roman", size: 20
+      pdf.text_box @map.name, align: :center, valign: :center, at: [0, pdf.bounds.height-40], width: pdf.bounds.width, height: 20
 
       pdf
     end

@@ -1,9 +1,9 @@
 require 'kincaid/map'
 include Kincaid
 
-map = Map.new
+map = Map.new "Haunted House"
 
-map.new_page do |page|
+map.new_page "1st Floor" do |page|
   page.rectangle "exterior", Point[-50, 0], 100, 105
   page.door :double, Point[-5, 0], width: 10
   page.door :normal, Point[-50, 80], height: 5
@@ -65,7 +65,7 @@ map.new_page do |page|
   page.stairs :up, :west, Point[20, 62.5], 10, 2.5
 end
 
-map.new_page do |page|
+map.new_page "2nd Floor" do |page|
   page.rectangle "exterior", Point[-50, 0], 100, 105
 
   #-----------------------------
